@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Annotation</title>
+
+    <link rel="stylesheet" type="text/css" href="static/lib/popup/modalzinha.css">
+    <link rel="stylesheet" type="text/css" href="static/css/main.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/1.6.4/fabric.min.js"></script>
+</head>
+<body>
+
+    <nav>
+        <button onclick="enableDrawRect()">Draw Rectangle</button>
+        <button onclick="enableMovement()">Select Tool</button>
+    </nav>
+
+    <div style="float: left">
+      <img src="http://www.ultrahdfreewallpapers.com/uploads/large/animals/cat-hd-wallpaper-0380.jpg" height="600" width="800" id="subjectImage"/>
+      <canvas id="canvas" height="600" width="800"></canvas>
+    </div>
+
+    <div style="float: left; margin-left: 30px">
+        <strong>Caption:</strong> <i><span id="selectedCaption">Select annotation first </span></i>
+        <hr/>
+        <ol>
+          <li>Click on Draw Rectangle Button on top left side</li>
+          <li>Draw rectangle, give caption.</li>
+          <li>You can only draw in this mode</li>
+          <li>To see caption, click on Select Tool</li>
+          <li>Then select each annotation</li>
+        </ol>
+    </div>
+    
+    <script src="static/js/CaptionController.js"></script>
+    <script src="static/js/EventController.js"></script>
+    <script src="static/js/Rectangle.js"></script>
+
+    <script>
+      let canvas = new fabric.Canvas('canvas');
+      let captionController = new CaptionController();
+      let eventController = new EventController();
+      let rectangle = new Rectangle();
+
+      canvas.observe('object:selected', function(e) { 
+        if(e.target.caption){
+          document.getElementById('selectedCaption').innerHTML = e.target.caption;
+        }
+      });
+
+      enableDrawRect = () => {
+        rectangle.init();
+      }
+
+      enableMovement = () => {
+        rectangle.clean();
+        canvas.getObjects().forEach(function(o) {
+        eventController.enableEvents(o);
+        });
+      }
+
+      // POC for rendering saved annotation
+      // var json = '{"objects":[{"type":"rect","originX":"left","originY":"top","left":504,"top":145,"width":159,"height":160,"fill":"transparent","stroke":"red","strokeWidth":1,"strokeDashArray":null,"strokeLineCap":"butt","strokeLineJoin":"miter","strokeMiterLimit":10,"scaleX":1,"scaleY":1,"angle":0,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"clipTo":null,"backgroundColor":"","fillRule":"nonzero","globalCompositeOperation":"source-over","transformMatrix":null,"skewX":0,"skewY":0,"rx":0,"ry":0}]}'
+      // canvas.loadFromJSON(json, canvas.renderAll.bind(canvas));
+    
+    </script>
+    
+</body>
+</html>
