@@ -36,7 +36,6 @@ function Rectangle(){
         stroke: 'red'
     });
 
-    // canvas.add(square); 
     canvas.renderAll();
     canvas.setActiveObject(square); 
   }
@@ -48,17 +47,29 @@ function Rectangle(){
         return false;
     }
 
-    var mouse = canvas.getPointer(e.e);
+    let mouse = canvas.getPointer(e.e);
 
-    var w = Math.abs(mouse.x - this.x),
-    h = Math.abs(mouse.y - this.y);
+    let w = Math.abs(mouse.x - this.x);
+    let h = Math.abs(mouse.y - this.y);
+
+    let initialTop = this.y;
+    let initialLeft = this.x;
+
+    if(mouse.x < this.x){
+      initialLeft = mouse.x;
+    }
+
+    if(mouse.y < this.y){
+      initialTop = mouse.y;
+    }
 
     if (!w || !h) {
         return false;
     }
 
-    var square = canvas.getActiveObject(); 
+    let square = canvas.getActiveObject(); 
     square.set('width', w).set('height', h);
+    square.set('top', initialTop).set('left', initialLeft);
     canvas.renderAll(); 
   }
 
@@ -73,13 +84,16 @@ function Rectangle(){
     // Later we can retrieve object with this id
     // MyObject = canvas.getActiveObject().get('id');
     var square = canvas.getActiveObject();
-    
-    //caption
-    let caption = captionController.getCaption();
-    if(caption){
-      square.caption = caption;
-      canvas.add(square);
-      eventController.disableEvents(square);
+
+    if(square.height != 0 && square.width != 0){
+      
+      //caption
+      let caption = captionController.displayAddCaptionForm(e);
+      if(caption){
+        square.caption = caption;
+        canvas.add(square);
+        eventController.disableEvents(square);
+      }
     }
 
     canvas.discardActiveObject();

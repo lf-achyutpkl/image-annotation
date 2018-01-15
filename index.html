@@ -23,16 +23,15 @@
       <canvas id="canvas" height="600" width="800"></canvas>
 
       <div class="annotorious-editor" id="annotorious-editor" style="position: absolute; z-index: 1; left: 0px; top: 0px; pointer-events: none;">
-          <form>
-            <textarea class="annotorious-editor-text goog-textarea" placeholder="Add a Comment..." tabindex="1" style="overflow-y: hidden; overflow-x: auto;box-sizing: border-box; height: 17px; padding-bottom: 0px;" rows="1"></textarea>
-            <div class="annotorious-editor-button-container">
-              <a class="annotorious-editor-button annotorious-editor-button-cancel" href="javascript:void(0);" tabindex="3">Cancel</a>
-              <a class="annotorious-editor-button annotorious-editor-button-save" href="javascript:void(0);" tabindex="2">Save</a>
-            </div>
-          </form>
-          <div style="position: absolute; top: 0px; right: 0px; width: 5px; height: 100%; cursor: e-resize;"></div>
-        </div>
-
+        <form>
+          <textarea class="annotorious-editor-text goog-textarea" placeholder="Add a Comment..." tabindex="1" style="overflow-y: hidden; overflow-x: auto;box-sizing: border-box; height: 17px; padding-bottom: 0px;" rows="1"></textarea>
+          <div class="annotorious-editor-button-container">
+            <a class="annotorious-editor-button annotorious-editor-button-cancel" href="javascript:void(0);" tabindex="3">Cancel</a>
+            <a class="annotorious-editor-button annotorious-editor-button-save" href="javascript:void(0);" tabindex="2">Save</a>
+          </div>
+        </form>
+        <div style="position: absolute; top: 0px; right: 0px; width: 5px; height: 100%; cursor: e-resize;"></div>
+      </div>
     </div>
 
     <div style="float: left; margin-left: 30px">
@@ -69,23 +68,16 @@
 
         modal.style.left = e.target.left + 'px';
         modal.style.top = e.target.top + e.target.height - 7 + 'px';
-        // modal.style.display = 'block';
         modal.style.opacity = 1;
         modal.style.pointerEvents = 'auto';
-
-        
-        // canvas.renderAll();
       });
 
       canvas.on('mouse:out', function(e) {
         document.getElementById('selectedCaption').innerHTML = 'Dummy Text';
-        // document.getElementById('annotorious-editor').style.display = 'none';
         
         let modal = document.getElementById('annotorious-editor');
         modal.style.opacity = 0;
         modal.style.pointerEvents = 'none';
-        
-        // canvas.renderAll();
       });
 
 
