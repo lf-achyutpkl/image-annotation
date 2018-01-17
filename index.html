@@ -16,6 +16,8 @@
     <nav>
         <button onclick="enableDrawRect()">Draw Rectangle</button>
         <button onclick="enableMovement()">Select Tool</button>
+        <button onclick="saveState()">Save</button>
+        <button onclick="loadState()">Load</button>
     </nav>
 
     <div style="float: left; position: relative;">
@@ -26,8 +28,10 @@
         <form>
           <textarea class="annotorious-editor-text goog-textarea" placeholder="Add a Comment..." tabindex="1" style="overflow-y: hidden; overflow-x: auto;box-sizing: border-box; height: 17px; padding-bottom: 0px;" rows="1"></textarea>
           <div class="annotorious-editor-button-container">
-            <a class="annotorious-editor-button annotorious-editor-button-cancel" href="javascript:void(0);" tabindex="3">Cancel</a>
-            <a class="annotorious-editor-button annotorious-editor-button-save" href="javascript:void(0);" tabindex="2">Save</a>
+            <a class="annotorious-editor-button annotorious-editor-button-cancel" href="javascript:void(0);"
+               tabindex="3" onclick="deleteAnn()">Delete</a>
+            <a class="annotorious-editor-button annotorious-editor-button-save" href="javascript:void(0);"
+               tabindex="2" onclick="saveAnn()">Save</a>
           </div>
         </form>
         <div style="position: absolute; top: 0px; right: 0px; width: 5px; height: 100%; cursor: e-resize;"></div>
@@ -50,53 +54,7 @@
     <script src="static/js/EventController.js"></script>
     <script src="static/js/Rectangle.js"></script>
 
-    <script>
-      let canvas = new fabric.Canvas('canvas');
-      let captionController = new CaptionController();
-      let eventController = new EventController();
-      let rectangle = new Rectangle();
-
-      canvas.observe('object:selected', function(e) { 
-        if(e.target.caption){
-          
-        }
-      });
-
-      canvas.on('mouse:over', function(e) {
-        document.getElementById('selectedCaption').innerHTML = e.target.caption;
-        let modal = document.getElementById('annotorious-editor');
-
-        modal.style.left = e.target.left + 'px';
-        modal.style.top = e.target.top + e.target.height - 7 + 'px';
-        modal.style.opacity = 1;
-        modal.style.pointerEvents = 'auto';
-      });
-
-      canvas.on('mouse:out', function(e) {
-        document.getElementById('selectedCaption').innerHTML = 'Dummy Text';
-        
-        let modal = document.getElementById('annotorious-editor');
-        modal.style.opacity = 0;
-        modal.style.pointerEvents = 'none';
-      });
-
-
-      enableDrawRect = () => {
-        rectangle.init();
-      }
-
-      enableMovement = () => {
-        rectangle.clean();
-        canvas.getObjects().forEach(function(o) {
-        eventController.enableEvents(o);
-        });
-      }
-
-      // POC for rendering saved annotation
-      // var json = '{"objects":[{"type":"rect","originX":"left","originY":"top","left":504,"top":145,"width":159,"height":160,"fill":"transparent","stroke":"red","strokeWidth":1,"strokeDashArray":null,"strokeLineCap":"butt","strokeLineJoin":"miter","strokeMiterLimit":10,"scaleX":1,"scaleY":1,"angle":0,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"clipTo":null,"backgroundColor":"","fillRule":"nonzero","globalCompositeOperation":"source-over","transformMatrix":null,"skewX":0,"skewY":0,"rx":0,"ry":0}]}'
-      // canvas.loadFromJSON(json, canvas.renderAll.bind(canvas));
-    
-    </script>
+    <script src="static/js/script.js"></script>
     
 </body>
 </html>
