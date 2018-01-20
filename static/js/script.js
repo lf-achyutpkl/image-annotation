@@ -2,6 +2,7 @@ let canvas = new fabric.Canvas('canvas');
 let captionController = new CaptionController();
 let eventController = new EventController();
 let rectangle = new Rectangle();
+let circle = new Circle();
 
 let $annModal = document.getElementById('annotorious-editor');
 let $annModalInput = $annModal.getElementsByTagName('textarea')[0];
@@ -28,6 +29,10 @@ rectangle.init({
   afterDraw: addItem,
 });
 
+circle.init({
+  afterDraw: addItem,
+});
+
 canvas.observe('object:selected', function(e) {
   if (e.target.caption) {
     console.log(e.target.caption, 111);
@@ -51,12 +56,39 @@ canvas.on('mouse:out', function(e) {
   hideAnnModal();
 });
 
+canvas.on('object:rotating', e => {
+  let itemId = e.target.itemId;
+  if (!itemId) return;
+  updateItem(itemId, e);
+});
+
+canvas.on('object:moving', e => {
+  let itemId = e.target.itemId;
+  if (!itemId) return;
+  updateItem(itemId, e);
+});
+
+canvas.on('object:scaling', e => {
+  let itemId = e.target.itemId;
+  if (!itemId) return;
+  updateItem(itemId, e);
+});
+
 enableDrawRect = () => {
+  rectangle.clean();
+  circle.clean();
   rectangle.draw();
+};
+
+enableDrawCircle = () => {
+  rectangle.clean();
+  circle.clean();
+  circle.draw();
 };
 
 enableMovement = () => {
   rectangle.clean();
+  circle.clean();
   canvas.getObjects().forEach(function(o) {
     console.log('herer', o);
     eventController.enableEvents(o);
@@ -64,7 +96,6 @@ enableMovement = () => {
 };
 
 saveAnn = () => {
-  console.log(selectedItemId, 111);
   if (!selectedItemId) return;
   data.items[selectedItemId].caption = annModal.inputElem.value;
   hideAnnModal();
@@ -78,10 +109,12 @@ deleteAnn = () => {};
 
 showAnnModal = itemId => {
   console.log('show modal');
+  console.log(itemId, data);
 
   selectedItemId = itemId;
 
   let item = data.items[itemId];
+  if (!item) return;
   let { top, left, height, caption } = item;
 
   annModal.position.top = top;
@@ -104,8 +137,8 @@ hideAnnModal = () => {
 };
 
 function addItem(item) {
+  console.log(data, 111);
   data.items[item.id] = item;
-  console.log(data);
 }
 
 function saveState() {
@@ -114,18 +147,52 @@ function saveState() {
 
 function loadState() {
   data = JSON.parse(localStorage.getItem('annData'));
-  console.log(data, 111);
+
   Object.keys(data.items).forEach(itemId => {
     var item = data.items[itemId];
-    var square = new fabric.Rect({
-      width: item.width,
-      height: item.height,
-      left: item.left,
-      top: item.top,
-      fill: 'transparent',
-      stroke: 'red',
-    });
-    square.set('itemId', itemId);
-    canvas.add(square);
+    var shape = null;
+    if (item.type === 'rectangle') {
+      shape = new fabric.Rect({
+        width: item.width,
+        height: item.height,
+        left: item.left,
+        top: item.top,
+        fill: 'transparent',
+        stroke: 'red',
+        angle: item.angle,
+        scaleX: item.scaleX,
+        scaleY: item.scaleY,
+      });
+    }
+    if (item.type === 'circle') {
+      shape = new fabric.Circle({
+        radius: item.radius,
+        left: item.left,
+        top: item.top,
+        fill: 'transparent',
+        stroke: 'red',
+        angle: item.angle,
+        scaleX: item.scaleX,
+        scaleY: item.scaleY,
+      });
+    }
+
+    shape.set('itemId', itemId);
+    canvas.add(shape);
+    lastId = lastId < itemId ? itemId : lastId;
   });
+}
+
+function updateItem(itemId, e) {
+  let target = e.target;
+  if (!target) return;
+  let item = data.items[itemId];
+  item.width = target.width;
+  item.height = target.height;
+  item.left = target.left;
+  item.top = target.top;
+  item.angle = target.angle;
+  item.scaleX = target.scaleX;
+  item.scaleY = target.scaleY;
+  data.items[itemId] = item;
 }

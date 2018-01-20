@@ -1,31 +1,5 @@
-function Rectangle() {
-  this.isListening = false;
-  this.started = false;
-  this.x = 0;
-  this.y = 0;
-
-  this.init = function({ afterDraw }) {
-    this.afterDraw = afterDraw;
-  };
-
-  this.draw = () => {
-    if (!this.isListening) {
-      canvas.observe('mouse:down', mousedown);
-      canvas.observe('mouse:move', mousemove);
-      canvas.observe('mouse:up', mouseup);
-      this.isListening = true;
-    }
-  };
-
-  this.clean = function() {
-    this.isListening = false;
-    canvas.off('mouse:down', null);
-    canvas.off('mouse:move', null);
-    canvas.off('mouse:up', null);
-  };
-
-  /* Mousedown */
-  const mousedown = e => {
+class Rectangle extends Shape {
+  mousedown(e) {
     var mouse = canvas.getPointer(e.e);
     this.started = true;
     this.x = mouse.x;
@@ -42,10 +16,9 @@ function Rectangle() {
 
     canvas.renderAll();
     canvas.setActiveObject(square);
-  };
+  }
 
-  /* Mousemove */
-  const mousemove = e => {
+  mousemove(e) {
     if (!this.started) {
       return false;
     }
@@ -69,15 +42,15 @@ function Rectangle() {
     if (!w || !h) {
       return false;
     }
+    console.log('aaaaa');
 
     let square = canvas.getActiveObject();
     square.set('width', w).set('height', h);
     square.set('top', initialTop).set('left', initialLeft);
     canvas.renderAll();
-  };
+  }
 
-  /* Mouseup */
-  const mouseup = e => {
+  mouseup(e) {
     if (this.started) {
       this.started = false;
     }
@@ -87,6 +60,8 @@ function Rectangle() {
     // Later we can retrieve object with this id
     // MyObject = canvas.getActiveObject().get('id');
     var square = canvas.getActiveObject();
+
+    if (!square) return;
 
     if (square.height != 0 && square.width != 0) {
       //caption
@@ -112,6 +87,9 @@ function Rectangle() {
         top: square.top,
         width: square.width,
         height: square.height,
+        angle: square.angle,
+        scaleX: square.scaleX,
+        scaleY: square.scaleY,
       });
-  };
+  }
 }
