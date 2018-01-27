@@ -29811,7 +29811,7 @@ var ImageAnnotationEdit = function (_React$Component) {
           ),
           !annModal.isEdit && _react2.default.createElement(
             'button',
-            { 'class': 'edit-button', onClick: this.enableAnnModalEdit },
+            { className: 'edit-button', onClick: this.enableAnnModalEdit },
             'Edit'
           ),
           annModal.isEdit && _react2.default.createElement(
