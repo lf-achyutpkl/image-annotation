@@ -29468,15 +29468,17 @@ var ImageAnnotationEdit = function (_React$Component) {
       var canvas = new _fabric.fabric.Canvas(canvasElement);
 
       canvas.observe('object:selected', function (e) {
-        if (e.target.caption) {
-          console.log(e.target.caption, 111);
-        }
+        var itemId = e.target.itemId;
+        if (!itemId) return;
+        _this2.showAnnModal(itemId);
       });
 
       canvas.on('mouse:over', function (e) {
         var itemId = e.target.itemId;
+        if (!itemId) return;
+        _this2.selectedItemId = itemId;
 
-        _this2.showAnnModal(itemId);
+        // this.showAnnModal(itemId);
       });
 
       canvas.on('mouse:out', function (_ref) {
@@ -29623,6 +29625,7 @@ var ImageAnnotationEdit = function (_React$Component) {
       annModal.isEdit = true;
 
       this.setState({ annModal: annModal });
+      this.enableMovement();
 
       if (true) {
         return 'asdas';
