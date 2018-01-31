@@ -29694,7 +29694,7 @@ var ImageAnnotationEdit = function (_React$Component) {
     value: function loadState() {
       var _this4 = this;
 
-      var data = this.props.data;
+      var data = this.props.data || { items: {} };
 
       var lastId = this.lastId;
 
@@ -29830,12 +29830,12 @@ var ImageAnnotationEdit = function (_React$Component) {
             { style: { display: "inline-block" } },
             !annModal.isEdit && _react2.default.createElement(
               'button',
-              { onClick: this.enableAnnModalEdit },
+              { className: 'edit-button', onClick: this.enableAnnModalEdit },
               'Edit'
             ),
             _react2.default.createElement(
               'button',
-              { onClick: this.deleteAnn },
+              { className: 'edit-button', onClick: this.deleteAnn },
               'Delete'
             )
           ),
