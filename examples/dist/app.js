@@ -29373,10 +29373,6 @@ var _react = __webpack_require__(6);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _EventController = __webpack_require__(44);
-
-var _EventController2 = _interopRequireDefault(_EventController);
-
 var _Rectangle = __webpack_require__(45);
 
 var _Rectangle2 = _interopRequireDefault(_Rectangle);
@@ -29394,8 +29390,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var eventController = new _EventController2.default();
 
 var ImageAnnotationEdit = function (_React$Component) {
   _inherits(ImageAnnotationEdit, _React$Component);
@@ -29477,8 +29471,6 @@ var ImageAnnotationEdit = function (_React$Component) {
         var itemId = e.target.itemId;
         if (!itemId) return;
         _this2.selectedItemId = itemId;
-
-        // this.showAnnModal(itemId);
       });
 
       canvas.on('mouse:out', function (_ref) {
@@ -29508,13 +29500,11 @@ var ImageAnnotationEdit = function (_React$Component) {
 
       var rectangle = new _Rectangle2.default({
         canvas: canvas,
-        showAnnCreateModal: showAnnCreateModal,
-        eventController: eventController
+        showAnnCreateModal: showAnnCreateModal
       });
       var circle = new _Circle2.default({
         canvas: canvas,
-        showAnnCreateModal: showAnnCreateModal,
-        eventController: eventController
+        showAnnCreateModal: showAnnCreateModal
       });
 
       rectangle.init({
@@ -29554,10 +29544,6 @@ var ImageAnnotationEdit = function (_React$Component) {
     value: function enableMovement() {
       this.rectangle.clean();
       this.circle.clean();
-      this.canvas.getObjects().forEach(function (o) {
-        console.log('herer', o);
-        eventController.enableEvents(o);
-      });
     }
   }, {
     key: 'enableAnnModalEdit',
@@ -29962,7 +29948,6 @@ var Shape = function () {
     this.r = 0;
     this.canvas = props.canvas;
     this.showAnnCreateModal = props.showAnnCreateModal;
-    this.eventController = props.eventController;
 
     this.init = this.init.bind(this);
     this.draw = this.draw.bind(this);
@@ -34759,42 +34744,7 @@ module.exports = ReactPropTypesSecret;
 
 
 /***/ }),
-/* 44 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = EventController;
-function EventController() {
-
-  this.disableEvents = function (o) {
-    o.selectable = false;
-    o.lockScalingX = true;
-    o.lockScalingY = true;
-    o.lockMovementX = true;
-    o.lockMovementY = true;
-    o.lockRotation = true;
-  };
-
-  this.enableEvents = function (o) {
-    o.selectable = true;
-    o.lockScalingX = false;
-    o.lockScalingY = false;
-    o.lockMovementX = false;
-    o.lockMovementY = false;
-    o.lockRotation = false;
-  };
-
-  this.enableMouseHover = function () {
-    // canvas.observe('object:selected', function(e) { mousedown(e); });
-  };
-}
-
-/***/ }),
+/* 44 */,
 /* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -34904,7 +34854,6 @@ var Rectangle = function (_Shape) {
         if (caption) {
           square.caption = caption;
           this.canvas.add(square);
-          this.eventController.disableEvents(square);
         }
       }
       var id = new Date().getTime();
@@ -36969,7 +36918,6 @@ var Circle = function (_Shape) {
         if (caption) {
           circle.caption = caption;
           this.canvas.add(circle);
-          this.eventController.disableEvents(circle);
         }
       }
       var id = new Date().getTime();
