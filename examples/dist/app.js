@@ -29650,7 +29650,7 @@ var ImageAnnotationEdit = function (_React$Component) {
   }, {
     key: 'addItem',
     value: function addItem(item) {
-      this.data.items[item.id] = item;
+      this.props.add(item);
     }
   }, {
     key: 'updateItem',
@@ -34856,15 +34856,12 @@ var Rectangle = function (_Shape) {
           this.canvas.add(square);
         }
       }
-      var id = new Date().getTime();
-      square.set("itemId", id);
 
       this.canvas.discardActiveObject();
       this.canvas.renderAll();
       this.isListening = false;
 
       if (this.afterDraw) this.afterDraw({
-        id: id,
         type: "rectangle",
         left: square.left,
         top: square.top,
@@ -34873,6 +34870,8 @@ var Rectangle = function (_Shape) {
         angle: square.angle,
         scaleX: square.scaleX,
         scaleY: square.scaleY
+      }, function (id) {
+        square.set("itemId", id);
       });
     }
   }]);
@@ -36920,15 +36919,12 @@ var Circle = function (_Shape) {
           this.canvas.add(circle);
         }
       }
-      var id = new Date().getTime();
-      circle.set("itemId", id);
 
       this.canvas.discardActiveObject();
       this.canvas.renderAll();
       this.isListening = false;
 
       if (this.afterDraw) this.afterDraw({
-        id: id,
         type: "circle",
         left: circle.left,
         top: circle.top,
@@ -36936,6 +36932,8 @@ var Circle = function (_Shape) {
         angle: circle.angle,
         scaleX: circle.scaleX,
         scaleY: circle.scaleY
+      }, function (id) {
+        circle.set("itemId", id);
       });
     }
   }]);
@@ -52944,6 +52942,7 @@ var App = function (_React$Component) {
             data: JSON.parse(localStorage.getItem('annData'))
         };
 
+        _this.add = _this.add.bind(_this);
         _this.update = _this.update.bind(_this);
         _this.remove = _this.remove.bind(_this);
         return _this;
@@ -52965,6 +52964,16 @@ var App = function (_React$Component) {
             this.setState({ data: data });
         }
     }, {
+        key: 'add',
+        value: function add(item) {
+            item.id = new Date().getTime();
+            var data = this.state.data;
+            data.items[item.id] = item;
+            this.setState({
+                data: data
+            });
+        }
+    }, {
         key: 'render',
         value: function render() {
             return _react2.default.createElement(
@@ -52977,6 +52986,7 @@ var App = function (_React$Component) {
                     data: this.state.data,
                     update: this.update,
                     remove: this.remove,
+                    add: this.add,
                     options: this.options
                 })
             );
