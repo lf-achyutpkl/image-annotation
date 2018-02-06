@@ -37006,49 +37006,49 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var min = 99;
-var max = 999999;
-var polygonMode = true;
-var pointArray = new Array();
-var lineArray = new Array();
-var activeLine;
-var activeShape = false;
-var canvas;
-var pointArray = new Array();
-var line;
-
 var Polygon = function (_Shape) {
   _inherits(Polygon, _Shape);
 
-  function Polygon() {
+  function Polygon(props) {
     _classCallCheck(this, Polygon);
 
-    return _possibleConstructorReturn(this, (Polygon.__proto__ || Object.getPrototypeOf(Polygon)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (Polygon.__proto__ || Object.getPrototypeOf(Polygon)).call(this, props));
+
+    _this.min = 99;
+    _this.max = 999999;
+    _this.polygonMode = true;
+    _this.lineArray = new Array();
+    _this.activeLine;
+    _this.activeShape = false;
+    _this.canvas;
+    _this.pointArray = new Array();
+    _this.line;
+    return _this;
   }
 
   _createClass(Polygon, [{
     key: 'mousedown',
     value: function mousedown(options) {
-      if (options.target && options.target.id == pointArray[0].id) {
-        this.generatePolygon(pointArray);
+      if (options.target && options.target.id == this.pointArray[0].id) {
+        this.generatePolygon(this.pointArray);
       }
-      if (polygonMode) {
+      if (this.polygonMode) {
         this.addPoint(options);
       }
     }
   }, {
     key: 'mousemove',
     value: function mousemove(options) {
-      if (activeLine && activeLine.class == 'line') {
+      if (this.activeLine && this.activeLine.class == 'line') {
         var pointer = this.canvas.getPointer(options.e);
-        activeLine.set({ x2: pointer.x, y2: pointer.y });
+        this.activeLine.set({ x2: pointer.x, y2: pointer.y });
 
-        var points = activeShape.get('points');
-        points[pointArray.length] = {
+        var points = this.activeShape.get('points');
+        points[this.pointArray.length] = {
           x: pointer.x,
           y: pointer.y
         };
-        activeShape.set({
+        this.activeShape.set({
           points: points
         });
         this.canvas.renderAll();
@@ -37061,15 +37061,15 @@ var Polygon = function (_Shape) {
   }, {
     key: 'drawPolygon',
     value: function drawPolygon() {
-      polygonMode = true;
-      pointArray = new Array();
-      lineArray = new Array();
-      activeLine;
+      this.polygonMode = true;
+      this.pointArray = new Array();
+      this.lineArray = new Array();
+      this.activeLine;
     }
   }, {
     key: 'addPoint',
     value: function addPoint(options) {
-      var random = Math.floor(Math.random() * (max - min + 1)) + min;
+      var random = Math.floor(Math.random() * (this.max - this.min + 1)) + this.min;
       var id = new Date().getTime() + random;
       var circle = new _fabric.fabric.Circle({
         radius: 5,
@@ -37085,13 +37085,13 @@ var Polygon = function (_Shape) {
         originY: 'center',
         id: id
       });
-      if (pointArray.length == 0) {
+      if (this.pointArray.length == 0) {
         circle.set({
           fill: 'red'
         });
       }
       var points = [options.e.layerX / this.canvas.getZoom(), options.e.layerY / this.canvas.getZoom(), options.e.layerX / this.canvas.getZoom(), options.e.layerY / this.canvas.getZoom()];
-      line = new _fabric.fabric.Line(points, {
+      this.line = new _fabric.fabric.Line(points, {
         strokeWidth: 2,
         fill: '#999999',
         stroke: '#999999',
@@ -37103,9 +37103,9 @@ var Polygon = function (_Shape) {
         hasControls: false,
         evented: false
       });
-      if (activeShape) {
+      if (this.activeShape) {
         var pos = this.canvas.getPointer(options.e);
-        var points = activeShape.get('points');
+        var points = this.activeShape.get('points');
         points.push({
           x: pos.x,
           y: pos.y
@@ -37120,9 +37120,9 @@ var Polygon = function (_Shape) {
           hasControls: false,
           evented: false
         });
-        this.canvas.remove(activeShape);
+        this.canvas.remove(this.activeShape);
         this.canvas.add(polygon);
-        activeShape = polygon;
+        this.activeShape = polygon;
         this.canvas.renderAll();
       } else {
         var polyPoint = [{
@@ -37139,15 +37139,15 @@ var Polygon = function (_Shape) {
           hasControls: false,
           evented: false
         });
-        activeShape = polygon;
+        this.activeShape = polygon;
         this.canvas.add(polygon);
       }
-      activeLine = line;
+      this.activeLine = this.line;
 
-      pointArray.push(circle);
-      lineArray.push(line);
+      this.pointArray.push(circle);
+      this.lineArray.push(this.line);
 
-      this.canvas.add(line);
+      this.canvas.add(this.line);
       this.canvas.add(circle);
       this.canvas.selection = false;
     }
@@ -37164,10 +37164,10 @@ var Polygon = function (_Shape) {
         });
         _this2.canvas.remove(point);
       });
-      lineArray.forEach(function (line, index) {
+      this.lineArray.forEach(function (line, index) {
         _this2.canvas.remove(line);
       });
-      this.canvas.remove(activeShape).remove(activeLine);
+      this.canvas.remove(this.activeShape).remove(this.activeLine);
       var polygon = new _fabric.fabric.Polygon(points, {
         stroke: '#333333',
         strokeWidth: 0.5,
@@ -37177,12 +37177,13 @@ var Polygon = function (_Shape) {
         hasControls: false
       });
       this.canvas.add(polygon);
-      console.log(polygon);
 
-      activeLine = null;
-      activeShape = null;
-      polygonMode = false;
+      this.activeLine = null;
+      this.activeShape = null;
+      this.polygonMode = false;
       this.canvas.selection = true;
+
+      this.isListening = false;
 
       if (this.afterDraw) this.afterDraw({
         type: 'polygon',
