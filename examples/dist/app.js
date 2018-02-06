@@ -29805,6 +29805,18 @@ var ImageAnnotationEdit = function (_React$Component) {
           });
         }
 
+        if (item.type === 'polygon') {
+          shape = new _fabric.fabric.Polygon(item.points, {
+            top: item.top,
+            left: item.left,
+            fill: 'transparent',
+            stroke: 'red',
+            opacity: 1,
+            hasBorders: false,
+            hasControls: false
+          });
+        }
+
         shape.set('itemId', itemId);
 
         _this4.canvas.add(shape);
@@ -37165,11 +37177,21 @@ var Polygon = function (_Shape) {
         hasControls: false
       });
       this.canvas.add(polygon);
+      console.log(polygon);
 
       activeLine = null;
       activeShape = null;
       polygonMode = false;
       this.canvas.selection = true;
+
+      if (this.afterDraw) this.afterDraw({
+        type: 'polygon',
+        points: points,
+        left: polygon.left,
+        top: polygon.top
+      }, function (id) {
+        polygon.set('itemId', id);
+      });
     }
   }]);
 
