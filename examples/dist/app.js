@@ -29692,10 +29692,14 @@ var ImageAnnotationEdit = function (_React$Component) {
     }
   }, {
     key: 'showAnnCreateModal',
-    value: function showAnnCreateModal(e) {
+    value: function showAnnCreateModal(_ref2) {
+      var top = _ref2.top,
+          left = _ref2.left,
+          height = _ref2.height;
+
       var annModal = _extends({}, this.state.annModal);
-      annModal.position.top = e.target.top + e.target.height;
-      annModal.position.left = e.target.left;
+      annModal.position.top = top + height;
+      annModal.position.left = left;
       annModal.text = '';
       annModal.display = 'block';
       annModal.isEdit = true;
@@ -29740,7 +29744,11 @@ var ImageAnnotationEdit = function (_React$Component) {
   }, {
     key: 'addItem',
     value: function addItem(item) {
-      this.props.add(item);
+      var _this4 = this;
+
+      this.props.add(item, function (itemId) {
+        _this4.showAnnModal(itemId);
+      });
     }
   }, {
     key: 'updateItem',
@@ -29768,7 +29776,7 @@ var ImageAnnotationEdit = function (_React$Component) {
   }, {
     key: 'loadState',
     value: function loadState() {
-      var _this4 = this;
+      var _this5 = this;
 
       var data = this.props.data || { items: {} };
 
@@ -29819,7 +29827,7 @@ var ImageAnnotationEdit = function (_React$Component) {
 
         shape.set('itemId', itemId);
 
-        _this4.canvas.add(shape);
+        _this5.canvas.add(shape);
         lastId = lastId < itemId ? itemId : lastId;
       });
 
@@ -29834,16 +29842,16 @@ var ImageAnnotationEdit = function (_React$Component) {
   }, {
     key: 'getOptions',
     value: function getOptions() {
-      var _this5 = this;
+      var _this6 = this;
 
       return this.props.options.filter(function (option) {
-        return option.toLowerCase().indexOf(_this5.state.annModal.searchText.toLowerCase()) > -1;
+        return option.toLowerCase().indexOf(_this6.state.annModal.searchText.toLowerCase()) > -1;
       });
     }
   }, {
     key: 'render',
     value: function render() {
-      var _this6 = this;
+      var _this7 = this;
 
       var annModal = this.state.annModal;
 
@@ -29853,7 +29861,7 @@ var ImageAnnotationEdit = function (_React$Component) {
         {
           className: 'image-annotation-wrapper',
           ref: function ref(e) {
-            return _this6.elem = e;
+            return _this7.elem = e;
           },
           onMouseOut: this.mouseOut
         },
@@ -29944,7 +29952,7 @@ var ImageAnnotationEdit = function (_React$Component) {
             this.getOptions().map(function (option, index) {
               return _react2.default.createElement(
                 'li',
-                { key: index, onClick: _this6.saveAnn(option) },
+                { key: index, onClick: _this7.saveAnn(option) },
                 option
               );
             })
@@ -34884,17 +34892,17 @@ var Rectangle = function (_Shape) {
 
       if (!square) return;
 
-      if (square.height != 0 && square.width != 0) {
-        //caption
-        var caption = this.showAnnCreateModal(e);
-        if (caption) {
-          square.caption = caption;
-          this.canvas.add(square);
-        }
-      }
-
-      this.canvas.discardActiveObject();
-      this.canvas.renderAll();
+      // if (square.height != 0 && square.width != 0) {
+      //   //caption
+      //   let caption = this.showAnnCreateModal(e);
+      //   if (caption) {
+      //     square.caption = caption;
+      //     this.canvas.add(square);
+      //   }
+      // }
+      //
+      // this.canvas.discardActiveObject();
+      // this.canvas.renderAll();
       this.isListening = false;
 
       if (this.afterDraw) this.afterDraw({
@@ -36948,16 +36956,16 @@ var Circle = function (_Shape) {
 
       if (!circle) return;
 
-      if (circle.height != 0 && circle.width != 0) {
-        var caption = this.showAnnCreateModal(e);
-        if (caption) {
-          circle.caption = caption;
-          this.canvas.add(circle);
-        }
-      }
-
-      this.canvas.discardActiveObject();
-      this.canvas.renderAll();
+      // if (circle.height != 0 && circle.width != 0) {
+      //   let caption = this.showAnnCreateModal(e);
+      //   if (caption) {
+      //     circle.caption = caption;
+      //     this.canvas.add(circle);
+      //   }
+      // }
+      //
+      // this.canvas.discardActiveObject();
+      // this.canvas.renderAll();
       this.isListening = false;
 
       if (this.afterDraw) this.afterDraw({
@@ -53223,12 +53231,14 @@ var App = function (_React$Component) {
         }
     }, {
         key: 'add',
-        value: function add(item) {
+        value: function add(item, cb) {
             item.id = new Date().getTime();
             var data = this.state.data;
             data.items[item.id] = item;
             this.setState({
                 data: data
+            }, function () {
+                cb && cb(item.id);
             });
         }
     }, {
