@@ -29505,6 +29505,9 @@ var ImageAnnotationEdit = function (_React$Component) {
     _this.handleAnnModalSearchChange = _this.handleAnnModalSearchChange.bind(_this);
     _this.deleteAnn = _this.deleteAnn.bind(_this);
     _this.getOptions = _this.getOptions.bind(_this);
+    _this.zoomIn = _this.zoomIn.bind(_this);
+    _this.zoomOut = _this.zoomOut.bind(_this);
+    _this.resetZoom = _this.resetZoom.bind(_this);
     return _this;
   }
 
@@ -29532,6 +29535,13 @@ var ImageAnnotationEdit = function (_React$Component) {
       canvasElement.setAttribute('height', 600);
       this.elem.appendChild(canvasElement);
       var canvas = new _fabric.fabric.Canvas(canvasElement);
+
+      var img = new Image();
+      var that = this;
+      img.onload = function () {
+        canvas.setBackgroundImage(img.src, canvas.renderAll.bind(canvas), { width: that.props.width, height: that.props.height });
+      };
+      img.src = this.props.imageURL + '.jpg';
 
       canvas.observe('object:selected', function (e) {
         var itemId = e.target.itemId;
@@ -29634,6 +29644,24 @@ var ImageAnnotationEdit = function (_React$Component) {
     value: function enableMovement() {
       this.rectangle.clean();
       this.circle.clean();
+    }
+  }, {
+    key: 'zoomIn',
+    value: function zoomIn() {
+      this.canvas.setZoom(this.canvas.getZoom() * 1.1);
+      this.canvas.renderAll();
+    }
+  }, {
+    key: 'zoomOut',
+    value: function zoomOut() {
+      this.canvas.setZoom(this.canvas.getZoom() * 0.9);
+      this.canvas.renderAll();
+    }
+  }, {
+    key: 'resetZoom',
+    value: function resetZoom() {
+      this.canvas.setZoom(1);
+      this.canvas.renderAll();
     }
   }, {
     key: 'enableAnnModalEdit',
@@ -29890,6 +29918,21 @@ var ImageAnnotationEdit = function (_React$Component) {
           ),
           _react2.default.createElement(
             'button',
+            { onClick: this.zoomIn },
+            'Zoom In'
+          ),
+          _react2.default.createElement(
+            'button',
+            { onClick: this.zoomOut },
+            'Zoom Out'
+          ),
+          _react2.default.createElement(
+            'button',
+            { onClick: this.resetZoom },
+            'Reset Zoom'
+          ),
+          _react2.default.createElement(
+            'button',
             { onClick: this.saveState },
             'Save'
           ),
@@ -29899,11 +29942,6 @@ var ImageAnnotationEdit = function (_React$Component) {
             'Reset'
           )
         ),
-        _react2.default.createElement('img', {
-          src: this.props.imageURL,
-          height: this.props.height,
-          width: this.props.width
-        }),
         _react2.default.createElement('canvas', { height: '600', width: '800' }),
         _react2.default.createElement(
           'div',
