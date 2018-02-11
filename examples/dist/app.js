@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 39);
+/******/ 	return __webpack_require__(__webpack_require__.s = 38);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -368,7 +368,7 @@ module.exports = emptyFunction;
 
 var base64 = __webpack_require__(45)
 var ieee754 = __webpack_require__(46)
-var isArray = __webpack_require__(21)
+var isArray = __webpack_require__(20)
 
 exports.Buffer = Buffer
 exports.SlowBuffer = SlowBuffer
@@ -2198,12 +2198,12 @@ var objectKeys = Object.keys || function (obj) {
 module.exports = Duplex;
 
 /*<replacement>*/
-var util = __webpack_require__(7);
+var util = __webpack_require__(6);
 util.inherits = __webpack_require__(2);
 /*</replacement>*/
 
-var Readable = __webpack_require__(26);
-var Writable = __webpack_require__(30);
+var Readable = __webpack_require__(25);
+var Writable = __webpack_require__(29);
 
 util.inherits(Duplex, Readable);
 
@@ -2280,21 +2280,6 @@ function forEach(xs, f) {
 
 /***/ }),
 /* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(process) {
-
-if (process.env.NODE_ENV === 'production') {
-  module.exports = __webpack_require__(41);
-} else {
-  module.exports = __webpack_require__(42);
-}
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
-
-/***/ }),
-/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(Buffer) {// Copyright Joyent, Inc. and other Node contributors.
@@ -2406,6 +2391,21 @@ function objectToString(o) {
 }
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4).Buffer))
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {
+
+if (process.env.NODE_ENV === 'production') {
+  module.exports = __webpack_require__(41);
+} else {
+  module.exports = __webpack_require__(42);
+}
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
 /* 8 */
@@ -28141,7 +28141,7 @@ fabric.util.object.extend(fabric.IText.prototype, /** @lends fabric.IText.protot
 
   var DOMParser = __webpack_require__(48).DOMParser,
       URL = __webpack_require__(17),
-      HTTP = __webpack_require__(22),
+      HTTP = __webpack_require__(21),
       HTTPS = __webpack_require__(64),
 
       Canvas = __webpack_require__(16),
@@ -29426,591 +29426,6 @@ module.exports = function(module) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(6);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _Rectangle = __webpack_require__(44);
-
-var _Rectangle2 = _interopRequireDefault(_Rectangle);
-
-var _Circle = __webpack_require__(66);
-
-var _Circle2 = _interopRequireDefault(_Circle);
-
-var _Polygon = __webpack_require__(67);
-
-var _Polygon2 = _interopRequireDefault(_Polygon);
-
-var _fabric = __webpack_require__(10);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var ImageAnnotationEdit = function (_React$Component) {
-  _inherits(ImageAnnotationEdit, _React$Component);
-
-  function ImageAnnotationEdit(props) {
-    _classCallCheck(this, ImageAnnotationEdit);
-
-    var _this = _possibleConstructorReturn(this, (ImageAnnotationEdit.__proto__ || Object.getPrototypeOf(ImageAnnotationEdit)).call(this, props));
-
-    _this.data = {
-      items: []
-    };
-    _this.state = {
-      annModal: {
-        position: {
-          left: 0,
-          top: 0
-        },
-        display: 'none',
-        text: '',
-        searchText: ''
-      }
-    };
-    _this.selectedItemId = null;
-
-    _this.enableDrawRect = _this.enableDrawRect.bind(_this);
-    _this.enableDrawCircle = _this.enableDrawCircle.bind(_this);
-    _this.enableDrawPolygon = _this.enableDrawPolygon.bind(_this);
-    _this.enableMovement = _this.enableMovement.bind(_this);
-    _this.saveState = _this.saveState.bind(_this);
-    _this.loadState = _this.loadState.bind(_this);
-    _this.hideAnnModal = _this.hideAnnModal.bind(_this);
-    _this.showAnnModal = _this.showAnnModal.bind(_this);
-    _this.updateItem = _this.updateItem.bind(_this);
-    _this.addItem = _this.addItem.bind(_this);
-    _this.saveAnn = _this.saveAnn.bind(_this);
-    _this.resetState = _this.resetState.bind(_this);
-    _this.init = _this.init.bind(_this);
-    _this.mouseOut = _this.mouseOut.bind(_this);
-    _this.enableAnnModalEdit = _this.enableAnnModalEdit.bind(_this);
-    _this.showAnnCreateModal = _this.showAnnCreateModal.bind(_this);
-    _this.handleAnnModalSearchChange = _this.handleAnnModalSearchChange.bind(_this);
-    _this.deleteAnn = _this.deleteAnn.bind(_this);
-    _this.getOptions = _this.getOptions.bind(_this);
-    _this.zoomIn = _this.zoomIn.bind(_this);
-    _this.zoomOut = _this.zoomOut.bind(_this);
-    _this.resetZoom = _this.resetZoom.bind(_this);
-    return _this;
-  }
-
-  _createClass(ImageAnnotationEdit, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      this.init();
-    }
-  }, {
-    key: 'componentWillReceiveProps',
-    value: function componentWillReceiveProps() {
-      this.init();
-      this.forceUpdate();
-    }
-  }, {
-    key: 'init',
-    value: function init() {
-      var _this2 = this;
-
-      var preElem = this.elem.querySelector('.canvas-container');
-      if (preElem) this.elem.removeChild(preElem);
-
-      var canvasElement = document.createElement('canvas');
-      canvasElement.setAttribute('width', 800);
-      canvasElement.setAttribute('height', 600);
-      this.elem.appendChild(canvasElement);
-      var canvas = new _fabric.fabric.Canvas(canvasElement);
-
-      var img = new Image();
-      var that = this;
-      img.onload = function () {
-        canvas.setBackgroundImage(img.src, canvas.renderAll.bind(canvas), { width: that.props.width, height: that.props.height });
-      };
-      img.src = this.props.imageURL + '.jpg';
-
-      canvas.observe('object:selected', function (e) {
-        var itemId = e.target.itemId;
-        if (!itemId) return;
-        _this2.showAnnModal(itemId);
-      });
-
-      canvas.on('mouse:over', function (e) {
-        var itemId = e.target.itemId;
-        if (!itemId) return;
-        _this2.selectedItemId = itemId;
-      });
-
-      canvas.on('mouse:out', function (_ref) {
-        var e = _ref.e;
-      });
-
-      canvas.on('object:rotating', function (e) {
-        var itemId = e.target.itemId;
-        if (!itemId) return;
-
-        _this2.updateItem(itemId, e);
-      });
-
-      canvas.on('object:moving', function (e) {
-        var itemId = e.target.itemId;
-        if (!itemId) return;
-        _this2.updateItem(itemId, e);
-      });
-
-      canvas.on('object:scaling', function (e) {
-        var itemId = e.target.itemId;
-        if (!itemId) return;
-        _this2.updateItem(itemId, e);
-      });
-
-      var showAnnCreateModal = this.showAnnCreateModal;
-
-      var rectangle = new _Rectangle2.default({
-        canvas: canvas,
-        showAnnCreateModal: showAnnCreateModal
-      });
-      var circle = new _Circle2.default({
-        canvas: canvas,
-        showAnnCreateModal: showAnnCreateModal
-      });
-      var polygon = new _Polygon2.default({
-        canvas: canvas,
-        showAnnCreateModal: showAnnCreateModal
-      });
-
-      rectangle.init({
-        afterDraw: this.addItem
-      });
-
-      circle.init({
-        afterDraw: this.addItem
-      });
-      polygon.init({
-        afterDraw: this.addItem
-      });
-
-      this.canvas = canvas;
-      this.rectangle = rectangle;
-      this.circle = circle;
-      this.polygon = polygon;
-      this.loadState();
-    }
-  }, {
-    key: 'shouldComponentUpdate',
-    value: function shouldComponentUpdate(props, nextState) {
-      return true;
-    }
-  }, {
-    key: 'enableDrawRect',
-    value: function enableDrawRect() {
-      this.rectangle.clean();
-      this.polygon.clean();
-      this.circle.clean();
-      this.rectangle.draw();
-    }
-  }, {
-    key: 'enableDrawCircle',
-    value: function enableDrawCircle() {
-      this.rectangle.clean();
-      this.polygon.clean();
-      this.circle.clean();
-      this.circle.draw();
-    }
-  }, {
-    key: 'enableDrawPolygon',
-    value: function enableDrawPolygon() {
-      this.rectangle.clean();
-      this.circle.clean();
-      this.polygon.clean();
-      this.polygon.draw();
-    }
-  }, {
-    key: 'enableMovement',
-    value: function enableMovement() {
-      this.rectangle.clean();
-      this.circle.clean();
-    }
-  }, {
-    key: 'zoomIn',
-    value: function zoomIn() {
-      this.canvas.setZoom(this.canvas.getZoom() * 1.1);
-      this.canvas.renderAll();
-    }
-  }, {
-    key: 'zoomOut',
-    value: function zoomOut() {
-      this.canvas.setZoom(this.canvas.getZoom() * 0.9);
-      this.canvas.renderAll();
-    }
-  }, {
-    key: 'resetZoom',
-    value: function resetZoom() {
-      this.canvas.setZoom(1);
-      this.canvas.renderAll();
-    }
-  }, {
-    key: 'enableAnnModalEdit',
-    value: function enableAnnModalEdit() {
-      var annModal = _extends({}, this.state.annModal, {
-        isEdit: true
-      });
-      this.setState({ annModal: annModal });
-    }
-  }, {
-    key: 'mouseOut',
-    value: function mouseOut(e) {
-      if (!this.elem.contains(e.relatedTarget)) {
-        this.hideAnnModal();
-      }
-    }
-  }, {
-    key: 'hideAnnModal',
-    value: function hideAnnModal() {
-      console.log('hide modal');
-      var selectedItemId = null;
-      this.selectedItemId = selectedItemId;
-
-      var annModal = _extends({}, this.state.annModal);
-      annModal.text = '';
-      annModal.display = 'none';
-      annModal.searchText = '';
-      this.setState({ annModal: annModal });
-    }
-  }, {
-    key: 'showAnnModal',
-    value: function showAnnModal(itemId) {
-      console.log('show modal');
-      console.log(itemId, this.data);
-
-      var selectedItemId = itemId;
-      this.selectedItemId = selectedItemId;
-
-      var item = this.data.items[itemId];
-      if (!item) return;
-      var top = item.top,
-          left = item.left,
-          height = item.height,
-          caption = item.caption;
-
-
-      var annModal = _extends({}, this.state.annModal);
-      console.log(top, height, top + height);
-      annModal.position.top = top + height;
-      annModal.position.left = left;
-      annModal.text = caption;
-      annModal.display = 'block';
-      annModal.isEdit = !caption;
-      annModal.searchText = '';
-
-      this.setState({ annModal: annModal });
-    }
-  }, {
-    key: 'showAnnCreateModal',
-    value: function showAnnCreateModal(_ref2) {
-      var top = _ref2.top,
-          left = _ref2.left,
-          height = _ref2.height;
-
-      var annModal = _extends({}, this.state.annModal);
-      annModal.position.top = top + height;
-      annModal.position.left = left;
-      annModal.text = '';
-      annModal.display = 'block';
-      annModal.isEdit = true;
-
-      this.setState({ annModal: annModal });
-      this.enableMovement();
-
-      if (true) {
-        return 'asdas';
-      } else {
-        return null;
-      }
-    }
-  }, {
-    key: 'saveAnn',
-    value: function saveAnn(option) {
-      var _this3 = this;
-
-      return function () {
-        if (!_this3.selectedItemId) return;
-        var item = _this3.data.items[_this3.selectedItemId];
-        if (!item) return;
-        _this3.data.items[_this3.selectedItemId]['caption'] = option;
-        _this3.hideAnnModal();
-      };
-    }
-  }, {
-    key: 'deleteAnn',
-    value: function deleteAnn() {
-      var itemId = this.selectedItemId;
-      var item = this.data.items[itemId];
-      if (!item) return;
-      this.props.remove(item);
-    }
-  }, {
-    key: 'resetState',
-    value: function resetState() {
-      this.setState({
-        resetComponentState: true
-      });
-    }
-  }, {
-    key: 'addItem',
-    value: function addItem(item) {
-      var _this4 = this;
-
-      this.props.add(item, function (itemId) {
-        _this4.showAnnModal(itemId);
-      });
-    }
-  }, {
-    key: 'updateItem',
-    value: function updateItem(itemId, e) {
-      var target = e.target;
-      if (!target) return;
-
-      var item = _extends({}, this.data.items[itemId]);
-
-      item.width = target.width;
-      item.height = target.height;
-      item.left = target.left;
-      item.top = target.top;
-      item.angle = target.angle;
-      item.scaleX = target.scaleX;
-      item.scaleY = target.scaleY;
-
-      this.data.items[itemId] = item;
-    }
-  }, {
-    key: 'saveState',
-    value: function saveState() {
-      if (this.props.update) this.props.update(this.data);
-    }
-  }, {
-    key: 'loadState',
-    value: function loadState() {
-      var _this5 = this;
-
-      var data = this.props.data || { items: {} };
-
-      var lastId = this.lastId;
-
-      Object.keys(data.items).forEach(function (itemId) {
-        var item = data.items[itemId];
-        var shape = null;
-
-        if (item.type === 'rectangle') {
-          shape = new _fabric.fabric.Rect({
-            width: item.width,
-            height: item.height,
-            left: item.left,
-            top: item.top,
-            fill: 'transparent',
-            stroke: 'red',
-            angle: item.angle,
-            scaleX: item.scaleX,
-            scaleY: item.scaleY
-          });
-        }
-
-        if (item.type === 'circle') {
-          shape = new _fabric.fabric.Circle({
-            radius: item.radius,
-            left: item.left,
-            top: item.top,
-            fill: 'transparent',
-            stroke: 'red',
-            angle: item.angle,
-            scaleX: item.scaleX,
-            scaleY: item.scaleY
-          });
-        }
-
-        if (item.type === 'polygon') {
-          shape = new _fabric.fabric.Polygon(item.points, {
-            top: item.top,
-            left: item.left,
-            fill: 'transparent',
-            stroke: 'red',
-            opacity: 1,
-            hasBorders: false,
-            hasControls: false
-          });
-        }
-
-        shape.set('itemId', itemId);
-
-        _this5.canvas.add(shape);
-        lastId = lastId < itemId ? itemId : lastId;
-      });
-
-      this.data = data;
-    }
-  }, {
-    key: 'handleAnnModalSearchChange',
-    value: function handleAnnModalSearchChange(e) {
-      var annModal = _extends({}, this.state.annModal, { searchText: e.target.value });
-      this.setState({ annModal: annModal });
-    }
-  }, {
-    key: 'getOptions',
-    value: function getOptions() {
-      var _this6 = this;
-
-      return this.props.options.filter(function (option) {
-        return option.toLowerCase().indexOf(_this6.state.annModal.searchText.toLowerCase()) > -1;
-      });
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      var _this7 = this;
-
-      var annModal = this.state.annModal;
-
-
-      return _react2.default.createElement(
-        'div',
-        {
-          className: 'image-annotation-wrapper',
-          ref: function ref(e) {
-            return _this7.elem = e;
-          },
-          onMouseOut: this.mouseOut
-        },
-        _react2.default.createElement(
-          'div',
-          { className: 'image-annotation-toolbar' },
-          _react2.default.createElement(
-            'button',
-            { onClick: this.enableDrawRect },
-            'Draw Rectangle'
-          ),
-          _react2.default.createElement(
-            'button',
-            { onClick: this.enableDrawCircle },
-            'Draw Circle'
-          ),
-          _react2.default.createElement(
-            'button',
-            { onClick: this.enableDrawPolygon },
-            'Draw Polygon'
-          ),
-          _react2.default.createElement(
-            'button',
-            { onClick: this.enableMovement },
-            'Select Tool'
-          ),
-          _react2.default.createElement(
-            'button',
-            { onClick: this.zoomIn },
-            'Zoom In'
-          ),
-          _react2.default.createElement(
-            'button',
-            { onClick: this.zoomOut },
-            'Zoom Out'
-          ),
-          _react2.default.createElement(
-            'button',
-            { onClick: this.resetZoom },
-            'Reset Zoom'
-          ),
-          _react2.default.createElement(
-            'button',
-            { onClick: this.saveState },
-            'Save'
-          ),
-          _react2.default.createElement(
-            'button',
-            { onClick: this.resetState },
-            'Reset'
-          )
-        ),
-        _react2.default.createElement('canvas', { height: '600', width: '800' }),
-        _react2.default.createElement(
-          'div',
-          {
-            className: 'image-annotation-selection',
-            style: {
-              position: 'absolute',
-              zIndex: 1,
-              left: annModal.position.left,
-              top: annModal.position.top,
-              display: annModal.display,
-              opacity: 1
-            }
-          },
-          _react2.default.createElement(
-            'p',
-            null,
-            annModal.text
-          ),
-          _react2.default.createElement(
-            'div',
-            { style: { display: 'inline-block' } },
-            !annModal.isEdit && _react2.default.createElement(
-              'button',
-              { className: 'edit-button', onClick: this.enableAnnModalEdit },
-              'Edit'
-            ),
-            _react2.default.createElement(
-              'button',
-              { className: 'edit-button', onClick: this.deleteAnn },
-              'Delete'
-            )
-          ),
-          annModal.isEdit && _react2.default.createElement(
-            'ul',
-            null,
-            _react2.default.createElement(
-              'li',
-              null,
-              _react2.default.createElement('input', {
-                type: 'text',
-                value: annModal.searchText,
-                onChange: this.handleAnnModalSearchChange
-              })
-            ),
-            this.getOptions().map(function (option, index) {
-              return _react2.default.createElement(
-                'li',
-                { key: index, onClick: _this7.saveAnn(option) },
-                option
-              );
-            })
-          )
-        )
-      );
-    }
-  }]);
-
-  return ImageAnnotationEdit;
-}(_react2.default.Component);
-
-exports.default = ImageAnnotationEdit;
-
-/***/ }),
-/* 20 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
 /* WEBPACK VAR INJECTION */(function(process) {/**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -30074,7 +29489,7 @@ module.exports = checkPropTypes;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 21 */
+/* 20 */
 /***/ (function(module, exports) {
 
 var toString = {}.toString;
@@ -30085,11 +29500,11 @@ module.exports = Array.isArray || function (arr) {
 
 
 /***/ }),
-/* 22 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var ClientRequest = __webpack_require__(54)
-var IncomingMessage = __webpack_require__(24)
+var IncomingMessage = __webpack_require__(23)
 var extend = __webpack_require__(62)
 var statusCodes = __webpack_require__(63)
 var url = __webpack_require__(17)
@@ -30174,7 +29589,7 @@ http.METHODS = [
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 23 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {exports.fetch = isFunction(global.fetch) && isFunction(global.ReadableStream)
@@ -30254,12 +29669,12 @@ xhr = null // Help gc
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 24 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(process, Buffer, global) {var capability = __webpack_require__(23)
+/* WEBPACK VAR INJECTION */(function(process, Buffer, global) {var capability = __webpack_require__(22)
 var inherits = __webpack_require__(2)
-var stream = __webpack_require__(25)
+var stream = __webpack_require__(24)
 
 var rStates = exports.readyStates = {
 	UNSENT: 0,
@@ -30478,20 +29893,20 @@ IncomingMessage.prototype._onXHRProgress = function () {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0), __webpack_require__(4).Buffer, __webpack_require__(1)))
 
 /***/ }),
-/* 25 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(26);
+exports = module.exports = __webpack_require__(25);
 exports.Stream = exports;
 exports.Readable = exports;
-exports.Writable = __webpack_require__(30);
+exports.Writable = __webpack_require__(29);
 exports.Duplex = __webpack_require__(5);
-exports.Transform = __webpack_require__(32);
+exports.Transform = __webpack_require__(31);
 exports.PassThrough = __webpack_require__(60);
 
 
 /***/ }),
-/* 26 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30526,7 +29941,7 @@ var processNextTick = __webpack_require__(11);
 module.exports = Readable;
 
 /*<replacement>*/
-var isArray = __webpack_require__(21);
+var isArray = __webpack_require__(20);
 /*</replacement>*/
 
 /*<replacement>*/
@@ -30536,7 +29951,7 @@ var Duplex;
 Readable.ReadableState = ReadableState;
 
 /*<replacement>*/
-var EE = __webpack_require__(27).EventEmitter;
+var EE = __webpack_require__(26).EventEmitter;
 
 var EElistenerCount = function (emitter, type) {
   return emitter.listeners(type).length;
@@ -30544,7 +29959,7 @@ var EElistenerCount = function (emitter, type) {
 /*</replacement>*/
 
 /*<replacement>*/
-var Stream = __webpack_require__(28);
+var Stream = __webpack_require__(27);
 /*</replacement>*/
 
 // TODO(bmeurer): Change this back to const once hole checks are
@@ -30561,7 +29976,7 @@ function _isUint8Array(obj) {
 /*</replacement>*/
 
 /*<replacement>*/
-var util = __webpack_require__(7);
+var util = __webpack_require__(6);
 util.inherits = __webpack_require__(2);
 /*</replacement>*/
 
@@ -30576,7 +29991,7 @@ if (debugUtil && debugUtil.debuglog) {
 /*</replacement>*/
 
 var BufferList = __webpack_require__(56);
-var destroyImpl = __webpack_require__(29);
+var destroyImpl = __webpack_require__(28);
 var StringDecoder;
 
 util.inherits(Readable, Stream);
@@ -30659,7 +30074,7 @@ function ReadableState(options, stream) {
   this.decoder = null;
   this.encoding = null;
   if (options.encoding) {
-    if (!StringDecoder) StringDecoder = __webpack_require__(31).StringDecoder;
+    if (!StringDecoder) StringDecoder = __webpack_require__(30).StringDecoder;
     this.decoder = new StringDecoder(options.encoding);
     this.encoding = options.encoding;
   }
@@ -30815,7 +30230,7 @@ Readable.prototype.isPaused = function () {
 
 // backwards compatibility.
 Readable.prototype.setEncoding = function (enc) {
-  if (!StringDecoder) StringDecoder = __webpack_require__(31).StringDecoder;
+  if (!StringDecoder) StringDecoder = __webpack_require__(30).StringDecoder;
   this._readableState.decoder = new StringDecoder(enc);
   this._readableState.encoding = enc;
   return this;
@@ -31505,7 +30920,7 @@ function indexOf(xs, x) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(0)))
 
 /***/ }),
-/* 27 */
+/* 26 */
 /***/ (function(module, exports) {
 
 // Copyright Joyent, Inc. and other Node contributors.
@@ -31813,14 +31228,14 @@ function isUndefined(arg) {
 
 
 /***/ }),
-/* 28 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(27).EventEmitter;
+module.exports = __webpack_require__(26).EventEmitter;
 
 
 /***/ }),
-/* 29 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31898,7 +31313,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 30 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31968,7 +31383,7 @@ var Duplex;
 Writable.WritableState = WritableState;
 
 /*<replacement>*/
-var util = __webpack_require__(7);
+var util = __webpack_require__(6);
 util.inherits = __webpack_require__(2);
 /*</replacement>*/
 
@@ -31979,7 +31394,7 @@ var internalUtil = {
 /*</replacement>*/
 
 /*<replacement>*/
-var Stream = __webpack_require__(28);
+var Stream = __webpack_require__(27);
 /*</replacement>*/
 
 /*<replacement>*/
@@ -31993,7 +31408,7 @@ function _isUint8Array(obj) {
 }
 /*</replacement>*/
 
-var destroyImpl = __webpack_require__(29);
+var destroyImpl = __webpack_require__(28);
 
 util.inherits(Writable, Stream);
 
@@ -32569,7 +31984,7 @@ Writable.prototype._destroy = function (err, cb) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0), __webpack_require__(57).setImmediate, __webpack_require__(1)))
 
 /***/ }),
-/* 31 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32847,7 +32262,7 @@ function simpleEnd(buf) {
 }
 
 /***/ }),
-/* 32 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32921,7 +32336,7 @@ module.exports = Transform;
 var Duplex = __webpack_require__(5);
 
 /*<replacement>*/
-var util = __webpack_require__(7);
+var util = __webpack_require__(6);
 util.inherits = __webpack_require__(2);
 /*</replacement>*/
 
@@ -33067,7 +32482,7 @@ function done(stream, er, data) {
 }
 
 /***/ }),
-/* 33 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33106,7 +32521,7 @@ var ExecutionEnvironment = {
 module.exports = ExecutionEnvironment;
 
 /***/ }),
-/* 34 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33187,7 +32602,7 @@ module.exports = EventListener;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 35 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33229,7 +32644,7 @@ function getActiveElement(doc) /*?DOMElement*/{
 module.exports = getActiveElement;
 
 /***/ }),
-/* 36 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33300,7 +32715,7 @@ function shallowEqual(objA, objB) {
 module.exports = shallowEqual;
 
 /***/ }),
-/* 37 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33343,7 +32758,7 @@ function containsNode(outerNode, innerNode) {
 module.exports = containsNode;
 
 /***/ }),
-/* 38 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33373,24 +32788,24 @@ function focusNode(node) {
 module.exports = focusNode;
 
 /***/ }),
-/* 39 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(40);
+module.exports = __webpack_require__(39);
 
 
 /***/ }),
-/* 40 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(module) {
 
-var _ImageAnnotationEdit = __webpack_require__(19);
+var _ImageAnnotationEdit = __webpack_require__(40);
 
 var _ImageAnnotationEdit2 = _interopRequireDefault(_ImageAnnotationEdit);
 
-var _react = __webpack_require__(6);
+var _react = __webpack_require__(7);
 
 var _react2 = _interopRequireDefault(_react);
 
@@ -33414,6 +32829,599 @@ module.export = {
     ImageAnnotationEdit: _ImageAnnotationEdit2.default
 };
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(18)(module)))
+
+/***/ }),
+/* 40 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(7);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _Rectangle = __webpack_require__(44);
+
+var _Rectangle2 = _interopRequireDefault(_Rectangle);
+
+var _Circle = __webpack_require__(66);
+
+var _Circle2 = _interopRequireDefault(_Circle);
+
+var _Polygon = __webpack_require__(67);
+
+var _Polygon2 = _interopRequireDefault(_Polygon);
+
+var _fabric = __webpack_require__(10);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var ImageAnnotationEdit = function (_React$Component) {
+  _inherits(ImageAnnotationEdit, _React$Component);
+
+  function ImageAnnotationEdit(props) {
+    _classCallCheck(this, ImageAnnotationEdit);
+
+    var _this = _possibleConstructorReturn(this, (ImageAnnotationEdit.__proto__ || Object.getPrototypeOf(ImageAnnotationEdit)).call(this, props));
+
+    _this.data = {
+      items: []
+    };
+    _this.state = {
+      annModal: {
+        position: {
+          left: 0,
+          top: 0
+        },
+        display: 'none',
+        text: '',
+        searchText: ''
+      }
+    };
+
+    _this.selectedItem = null;
+    _this.selectedItemId = null;
+
+    _this.enableDrawRect = _this.enableDrawRect.bind(_this);
+    _this.enableDrawCircle = _this.enableDrawCircle.bind(_this);
+    _this.enableDrawPolygon = _this.enableDrawPolygon.bind(_this);
+    _this.enableMovement = _this.enableMovement.bind(_this);
+    _this.saveState = _this.saveState.bind(_this);
+    _this.loadState = _this.loadState.bind(_this);
+    _this.hideAnnModal = _this.hideAnnModal.bind(_this);
+    _this.showAnnModal = _this.showAnnModal.bind(_this);
+    _this.updateItem = _this.updateItem.bind(_this);
+    _this.addItem = _this.addItem.bind(_this);
+    _this.saveAnn = _this.saveAnn.bind(_this);
+    _this.resetState = _this.resetState.bind(_this);
+    _this.init = _this.init.bind(_this);
+    _this.mouseOut = _this.mouseOut.bind(_this);
+    _this.enableAnnModalEdit = _this.enableAnnModalEdit.bind(_this);
+    _this.showAnnCreateModal = _this.showAnnCreateModal.bind(_this);
+    _this.handleAnnModalSearchChange = _this.handleAnnModalSearchChange.bind(_this);
+    _this.deleteAnn = _this.deleteAnn.bind(_this);
+    _this.getOptions = _this.getOptions.bind(_this);
+    _this.zoomIn = _this.zoomIn.bind(_this);
+    _this.zoomOut = _this.zoomOut.bind(_this);
+    _this.resetZoom = _this.resetZoom.bind(_this);
+    return _this;
+  }
+
+  _createClass(ImageAnnotationEdit, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.init();
+    }
+  }, {
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps() {
+      this.init();
+      this.forceUpdate();
+    }
+  }, {
+    key: 'init',
+    value: function init() {
+      var _this2 = this;
+
+      var preElem = this.elem.querySelector('.canvas-container');
+      if (preElem) this.elem.removeChild(preElem);
+
+      var canvasElement = document.createElement('canvas');
+      canvasElement.setAttribute('width', 800);
+      canvasElement.setAttribute('height', 600);
+      this.elem.appendChild(canvasElement);
+      var canvas = new _fabric.fabric.Canvas(canvasElement);
+
+      var img = new Image();
+      var that = this;
+      img.onload = function () {
+        canvas.setBackgroundImage(img.src, canvas.renderAll.bind(canvas), { width: that.props.width, height: that.props.height });
+      };
+      img.src = this.props.imageURL + '.jpg';
+
+      canvas.observe('object:selected', function (e) {
+        var itemId = e.target.itemId;
+        if (!itemId) return;
+        _this2.showAnnModal(itemId);
+      });
+
+      canvas.on('mouse:over', function (e) {
+        var itemId = e.target.itemId;
+        if (!itemId) return;
+        _this2.selectedItem = e.target;
+        _this2.selectedItemId = itemId;
+      });
+
+      canvas.on('mouse:out', function (_ref) {
+        var e = _ref.e;
+      });
+
+      canvas.on('object:rotating', function (e) {
+        var itemId = e.target.itemId;
+        if (!itemId) return;
+
+        _this2.updateItem(itemId, e);
+      });
+
+      canvas.on('object:moving', function (e) {
+        var itemId = e.target.itemId;
+        if (!itemId) return;
+        _this2.updateItem(itemId, e);
+      });
+
+      canvas.on('object:scaling', function (e) {
+        var itemId = e.target.itemId;
+        if (!itemId) return;
+        _this2.updateItem(itemId, e);
+      });
+
+      var showAnnCreateModal = this.showAnnCreateModal;
+
+      var rectangle = new _Rectangle2.default({
+        canvas: canvas,
+        showAnnCreateModal: showAnnCreateModal
+      });
+      var circle = new _Circle2.default({
+        canvas: canvas,
+        showAnnCreateModal: showAnnCreateModal
+      });
+      var polygon = new _Polygon2.default({
+        canvas: canvas,
+        showAnnCreateModal: showAnnCreateModal
+      });
+
+      rectangle.init({
+        afterDraw: this.addItem
+      });
+
+      circle.init({
+        afterDraw: this.addItem
+      });
+      polygon.init({
+        afterDraw: this.addItem
+      });
+
+      this.canvas = canvas;
+      this.rectangle = rectangle;
+      this.circle = circle;
+      this.polygon = polygon;
+      this.loadState();
+    }
+  }, {
+    key: 'shouldComponentUpdate',
+    value: function shouldComponentUpdate(props, nextState) {
+      return true;
+    }
+  }, {
+    key: 'enableDrawRect',
+    value: function enableDrawRect() {
+      this.rectangle.clean();
+      this.polygon.clean();
+      this.circle.clean();
+      this.rectangle.draw();
+    }
+  }, {
+    key: 'enableDrawCircle',
+    value: function enableDrawCircle() {
+      this.rectangle.clean();
+      this.polygon.clean();
+      this.circle.clean();
+      this.circle.draw();
+    }
+  }, {
+    key: 'enableDrawPolygon',
+    value: function enableDrawPolygon() {
+      this.rectangle.clean();
+      this.circle.clean();
+      this.polygon.clean();
+      this.polygon.draw();
+    }
+  }, {
+    key: 'enableMovement',
+    value: function enableMovement() {
+      this.rectangle.clean();
+      this.circle.clean();
+    }
+  }, {
+    key: 'zoomIn',
+    value: function zoomIn() {
+      this.canvas.setZoom(this.canvas.getZoom() * 1.1);
+      this.canvas.renderAll();
+    }
+  }, {
+    key: 'zoomOut',
+    value: function zoomOut() {
+      this.canvas.setZoom(this.canvas.getZoom() * 0.9);
+      this.canvas.renderAll();
+    }
+  }, {
+    key: 'resetZoom',
+    value: function resetZoom() {
+      this.canvas.setZoom(1);
+      this.canvas.renderAll();
+    }
+  }, {
+    key: 'enableAnnModalEdit',
+    value: function enableAnnModalEdit() {
+      var annModal = _extends({}, this.state.annModal, {
+        isEdit: true
+      });
+      this.setState({ annModal: annModal });
+    }
+  }, {
+    key: 'mouseOut',
+    value: function mouseOut(e) {
+      if (!this.elem.contains(e.relatedTarget)) {
+        this.hideAnnModal();
+      }
+    }
+  }, {
+    key: 'hideAnnModal',
+    value: function hideAnnModal() {
+      console.log('hide modal');
+      var selectedItemId = null;
+      this.selectedItem = null;
+      this.selectedItemId = selectedItemId;
+
+      var annModal = _extends({}, this.state.annModal);
+      annModal.text = '';
+      annModal.display = 'none';
+      annModal.searchText = '';
+      this.setState({ annModal: annModal });
+    }
+  }, {
+    key: 'showAnnModal',
+    value: function showAnnModal(itemId) {
+      console.log('show modal');
+      console.log(itemId, this.data);
+
+      var selectedItemId = itemId;
+      this.selectedItemId = selectedItemId;
+
+      var item = this.data.items[itemId];
+      if (!item) return;
+      var top = item.top,
+          left = item.left,
+          height = item.height,
+          caption = item.caption;
+
+
+      var annModal = _extends({}, this.state.annModal);
+      console.log(top, height, top + height);
+      annModal.position.top = top + height;
+      annModal.position.left = left;
+      annModal.text = caption;
+      annModal.display = 'block';
+      annModal.isEdit = !caption;
+      annModal.searchText = '';
+
+      this.setState({ annModal: annModal });
+    }
+  }, {
+    key: 'showAnnCreateModal',
+    value: function showAnnCreateModal(_ref2) {
+      var top = _ref2.top,
+          left = _ref2.left,
+          height = _ref2.height;
+
+      var annModal = _extends({}, this.state.annModal);
+      annModal.position.top = top + height;
+      annModal.position.left = left;
+      annModal.text = '';
+      annModal.display = 'block';
+      annModal.isEdit = true;
+
+      this.setState({ annModal: annModal });
+      this.enableMovement();
+
+      if (true) {
+        return 'asdas';
+      } else {
+        return null;
+      }
+    }
+  }, {
+    key: 'saveAnn',
+    value: function saveAnn(option) {
+      var _this3 = this;
+
+      return function () {
+        if (!_this3.selectedItemId) return;
+        var item = _this3.data.items[_this3.selectedItemId];
+        if (!item) return;
+        _this3.data.items[_this3.selectedItemId]['caption'] = option.label;
+        _this3.data.items[_this3.selectedItemId]['stroke'] = option.color;
+        _this3.selectedItem['stroke'] = option.color;
+
+        _this3.canvas.renderAll();
+        _this3.hideAnnModal();
+      };
+    }
+  }, {
+    key: 'deleteAnn',
+    value: function deleteAnn() {
+      var itemId = this.selectedItemId;
+      var item = this.data.items[itemId];
+      if (!item) return;
+      this.props.remove(item);
+    }
+  }, {
+    key: 'resetState',
+    value: function resetState() {
+      this.setState({
+        resetComponentState: true
+      });
+    }
+  }, {
+    key: 'addItem',
+    value: function addItem(item) {
+      var _this4 = this;
+
+      this.props.add(item, function (itemId) {
+        _this4.showAnnModal(itemId);
+      });
+    }
+  }, {
+    key: 'updateItem',
+    value: function updateItem(itemId, e) {
+      var target = e.target;
+      if (!target) return;
+
+      var item = _extends({}, this.data.items[itemId]);
+
+      item.width = target.width;
+      item.height = target.height;
+      item.left = target.left;
+      item.top = target.top;
+      item.angle = target.angle;
+      item.scaleX = target.scaleX;
+      item.scaleY = target.scaleY;
+
+      this.data.items[itemId] = item;
+    }
+  }, {
+    key: 'saveState',
+    value: function saveState() {
+      if (this.props.update) this.props.update(this.data);
+    }
+  }, {
+    key: 'loadState',
+    value: function loadState() {
+      var _this5 = this;
+
+      var data = this.props.data || { items: {} };
+
+      var lastId = this.lastId;
+
+      Object.keys(data.items).forEach(function (itemId) {
+        var item = data.items[itemId];
+        var shape = null;
+
+        if (item.type === 'rectangle') {
+          shape = new _fabric.fabric.Rect({
+            width: item.width,
+            height: item.height,
+            left: item.left,
+            top: item.top,
+            fill: 'transparent',
+            stroke: item.stroke || 'red',
+            angle: item.angle,
+            scaleX: item.scaleX,
+            scaleY: item.scaleY
+          });
+        }
+
+        if (item.type === 'circle') {
+          shape = new _fabric.fabric.Circle({
+            radius: item.radius,
+            left: item.left,
+            top: item.top,
+            fill: 'transparent',
+            stroke: item.stroke || 'red',
+            angle: item.angle,
+            scaleX: item.scaleX,
+            scaleY: item.scaleY
+          });
+        }
+
+        if (item.type === 'polygon') {
+          shape = new _fabric.fabric.Polygon(item.points, {
+            top: item.top,
+            left: item.left,
+            fill: 'transparent',
+            stroke: item.stroke || 'red',
+            opacity: 1,
+            hasBorders: false,
+            hasControls: false
+          });
+        }
+
+        shape.set('itemId', itemId);
+
+        _this5.canvas.add(shape);
+        lastId = lastId < itemId ? itemId : lastId;
+      });
+
+      this.data = data;
+    }
+  }, {
+    key: 'handleAnnModalSearchChange',
+    value: function handleAnnModalSearchChange(e) {
+      var annModal = _extends({}, this.state.annModal, { searchText: e.target.value });
+      this.setState({ annModal: annModal });
+    }
+  }, {
+    key: 'getOptions',
+    value: function getOptions() {
+      var _this6 = this;
+
+      return this.props.options.filter(function (option) {
+        return option.label.toLowerCase().indexOf(_this6.state.annModal.searchText.toLowerCase()) > -1;
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this7 = this;
+
+      var annModal = this.state.annModal;
+
+
+      return _react2.default.createElement(
+        'div',
+        {
+          className: 'image-annotation-wrapper',
+          ref: function ref(e) {
+            return _this7.elem = e;
+          },
+          onMouseOut: this.mouseOut
+        },
+        _react2.default.createElement(
+          'div',
+          { className: 'image-annotation-toolbar' },
+          _react2.default.createElement(
+            'button',
+            { onClick: this.enableDrawRect },
+            'Draw Rectangle'
+          ),
+          _react2.default.createElement(
+            'button',
+            { onClick: this.enableDrawCircle },
+            'Draw Circle'
+          ),
+          _react2.default.createElement(
+            'button',
+            { onClick: this.enableDrawPolygon },
+            'Draw Polygon'
+          ),
+          _react2.default.createElement(
+            'button',
+            { onClick: this.enableMovement },
+            'Select Tool'
+          ),
+          _react2.default.createElement(
+            'button',
+            { onClick: this.zoomIn },
+            'Zoom In'
+          ),
+          _react2.default.createElement(
+            'button',
+            { onClick: this.zoomOut },
+            'Zoom Out'
+          ),
+          _react2.default.createElement(
+            'button',
+            { onClick: this.resetZoom },
+            'Reset Zoom'
+          ),
+          _react2.default.createElement(
+            'button',
+            { onClick: this.saveState },
+            'Save'
+          ),
+          _react2.default.createElement(
+            'button',
+            { onClick: this.resetState },
+            'Reset'
+          )
+        ),
+        _react2.default.createElement('canvas', { height: '600', width: '800' }),
+        _react2.default.createElement(
+          'div',
+          {
+            className: 'image-annotation-selection',
+            style: {
+              position: 'absolute',
+              zIndex: 1,
+              left: annModal.position.left,
+              top: annModal.position.top,
+              display: annModal.display,
+              opacity: 1
+            }
+          },
+          _react2.default.createElement(
+            'p',
+            null,
+            annModal.text
+          ),
+          _react2.default.createElement(
+            'div',
+            { style: { display: 'inline-block' } },
+            !annModal.isEdit && _react2.default.createElement(
+              'button',
+              { className: 'edit-button', onClick: this.enableAnnModalEdit },
+              'Edit'
+            ),
+            _react2.default.createElement(
+              'button',
+              { className: 'edit-button', onClick: this.deleteAnn },
+              'Delete'
+            )
+          ),
+          annModal.isEdit && _react2.default.createElement(
+            'ul',
+            null,
+            _react2.default.createElement(
+              'li',
+              null,
+              _react2.default.createElement('input', {
+                type: 'text',
+                value: annModal.searchText,
+                onChange: this.handleAnnModalSearchChange
+              })
+            ),
+            this.getOptions().map(function (option, index) {
+              return _react2.default.createElement(
+                'li',
+                { key: index, onClick: _this7.saveAnn(option) },
+                option.label
+              );
+            })
+          )
+        )
+      );
+    }
+  }]);
+
+  return ImageAnnotationEdit;
+}(_react2.default.Component);
+
+exports.default = ImageAnnotationEdit;
 
 /***/ }),
 /* 41 */
@@ -33470,7 +33478,7 @@ var emptyObject = __webpack_require__(9);
 var invariant = __webpack_require__(13);
 var warning = __webpack_require__(14);
 var emptyFunction = __webpack_require__(3);
-var checkPropTypes = __webpack_require__(20);
+var checkPropTypes = __webpack_require__(19);
 
 // TODO: this is special because it gets imported during build.
 
@@ -35947,10 +35955,10 @@ var objectKeys = Object.keys || function (obj) {
 /* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(Buffer, global, process) {var capability = __webpack_require__(23)
+/* WEBPACK VAR INJECTION */(function(Buffer, global, process) {var capability = __webpack_require__(22)
 var inherits = __webpack_require__(2)
-var response = __webpack_require__(24)
-var stream = __webpack_require__(25)
+var response = __webpack_require__(23)
+var stream = __webpack_require__(24)
 var toArrayBuffer = __webpack_require__(61)
 
 var IncomingMessage = response.IncomingMessage
@@ -36363,7 +36371,7 @@ module.exports = function () {
 /* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var apply = Function.prototype.apply;
+/* WEBPACK VAR INJECTION */(function(global) {var apply = Function.prototype.apply;
 
 // DOM APIs, for completeness
 
@@ -36414,9 +36422,17 @@ exports._unrefActive = exports.active = function(item) {
 
 // setimmediate attaches itself to the global object
 __webpack_require__(58);
-exports.setImmediate = setImmediate;
-exports.clearImmediate = clearImmediate;
+// On some exotic environments, it's not clear which object `setimmeidate` was
+// able to install onto.  Search each possibility in the same order as the
+// `setimmediate` library.
+exports.setImmediate = (typeof self !== "undefined" && self.setImmediate) ||
+                       (typeof global !== "undefined" && global.setImmediate) ||
+                       (this && this.setImmediate);
+exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
+                         (typeof global !== "undefined" && global.clearImmediate) ||
+                         (this && this.clearImmediate);
 
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
 /* 58 */
@@ -36719,10 +36735,10 @@ function config (name) {
 
 module.exports = PassThrough;
 
-var Transform = __webpack_require__(32);
+var Transform = __webpack_require__(31);
 
 /*<replacement>*/
-var util = __webpack_require__(7);
+var util = __webpack_require__(6);
 util.inherits = __webpack_require__(2);
 /*</replacement>*/
 
@@ -36870,7 +36886,7 @@ module.exports = {
 /* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var http = __webpack_require__(22)
+var http = __webpack_require__(21)
 var url = __webpack_require__(17)
 
 var https = module.exports
@@ -37315,7 +37331,7 @@ if (process.env.NODE_ENV === 'production') {
 /*
  Modernizr 3.0.0pre (Custom Build) | MIT
 */
-var aa=__webpack_require__(6),l=__webpack_require__(33),B=__webpack_require__(8),C=__webpack_require__(3),ba=__webpack_require__(34),da=__webpack_require__(35),ea=__webpack_require__(36),fa=__webpack_require__(37),ia=__webpack_require__(38),D=__webpack_require__(9);
+var aa=__webpack_require__(7),l=__webpack_require__(32),B=__webpack_require__(8),C=__webpack_require__(3),ba=__webpack_require__(33),da=__webpack_require__(34),ea=__webpack_require__(35),fa=__webpack_require__(36),ia=__webpack_require__(37),D=__webpack_require__(9);
 function E(a){for(var b=arguments.length-1,c="Minified React error #"+a+"; visit http://facebook.github.io/react/docs/error-decoder.html?invariant\x3d"+a,d=0;d<b;d++)c+="\x26args[]\x3d"+encodeURIComponent(arguments[d+1]);b=Error(c+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings.");b.name="Invariant Violation";b.framesToPop=1;throw b;}aa?void 0:E("227");
 var oa={children:!0,dangerouslySetInnerHTML:!0,defaultValue:!0,defaultChecked:!0,innerHTML:!0,suppressContentEditableWarning:!0,suppressHydrationWarning:!0,style:!0};function pa(a,b){return(a&b)===b}
 var ta={MUST_USE_PROPERTY:1,HAS_BOOLEAN_VALUE:4,HAS_NUMERIC_VALUE:8,HAS_POSITIVE_NUMERIC_VALUE:24,HAS_OVERLOADED_BOOLEAN_VALUE:32,HAS_STRING_BOOLEAN_VALUE:64,injectDOMPropertyConfig:function(a){var b=ta,c=a.Properties||{},d=a.DOMAttributeNamespaces||{},e=a.DOMAttributeNames||{};a=a.DOMMutationMethods||{};for(var f in c){ua.hasOwnProperty(f)?E("48",f):void 0;var g=f.toLowerCase(),h=c[f];g={attributeName:g,attributeNamespace:null,propertyName:f,mutationMethod:null,mustUseProperty:pa(h,b.MUST_USE_PROPERTY),
@@ -37612,19 +37628,19 @@ if (process.env.NODE_ENV !== "production") {
   (function() {
 'use strict';
 
-var React = __webpack_require__(6);
+var React = __webpack_require__(7);
 var invariant = __webpack_require__(13);
 var warning = __webpack_require__(14);
-var ExecutionEnvironment = __webpack_require__(33);
+var ExecutionEnvironment = __webpack_require__(32);
 var _assign = __webpack_require__(8);
 var emptyFunction = __webpack_require__(3);
-var EventListener = __webpack_require__(34);
-var getActiveElement = __webpack_require__(35);
-var shallowEqual = __webpack_require__(36);
-var containsNode = __webpack_require__(37);
-var focusNode = __webpack_require__(38);
+var EventListener = __webpack_require__(33);
+var getActiveElement = __webpack_require__(34);
+var shallowEqual = __webpack_require__(35);
+var containsNode = __webpack_require__(36);
+var focusNode = __webpack_require__(37);
 var emptyObject = __webpack_require__(9);
-var checkPropTypes = __webpack_require__(20);
+var checkPropTypes = __webpack_require__(19);
 var hyphenateStyleName = __webpack_require__(73);
 var camelizeStyleName = __webpack_require__(75);
 
@@ -53161,11 +53177,11 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = __webpack_require__(6);
+var _react = __webpack_require__(7);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _ImageAnnotationEdit = __webpack_require__(19);
+var _ImageAnnotationEdit = __webpack_require__(40);
 
 var _ImageAnnotationEdit2 = _interopRequireDefault(_ImageAnnotationEdit);
 
@@ -53185,7 +53201,7 @@ var App = function (_React$Component) {
 
         var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 
-        _this.options = ['Microaneurysm', 'Haemorrhages', 'Venous bedding ', 'Intraretinal microvascular abnormalities(IRMA)', 'New vessels at the disc (NVD)', 'New vessels elsewhere (NVE)', 'Vitreous haemorrhage', 'Pre retinal haemorrrhage', 'Hard exudates', 'Retinal thickening'];
+        _this.options = [{ label: 'Microaneurysm', color: 'green' }, { label: 'Haemorrhages', color: 'blue' }, { label: 'Venous bedding', color: 'yellow' }, { label: 'Intraretinal microvascular abnormalities(IRMA)', color: 'cyan' }, { label: 'New vessels at the disc (NVD)', color: 'pink' }, { label: 'New vessels elsewhere (NVE)', color: 'maroon' }, { label: 'Vitreous haemorrhage', color: 'Aqua' }, { label: 'Pre retinal haemorrrhage', color: 'Teal' }, { label: 'Hard exudates', color: 'DARKSALMON' }, { label: 'Retinal thickening', color: 'PURPLE' }];
 
         var sampleData = {
             items: {
