@@ -29709,6 +29709,7 @@ var ImageAnnotationEdit = function (_React$Component) {
 
 
       var annModal = _extends({}, this.state.annModal);
+      console.log(top, height, top + height);
       annModal.position.top = top + height;
       annModal.position.left = left;
       annModal.text = caption;
@@ -36945,7 +36946,7 @@ var Circle = function (_Shape) {
   }
 
   _createClass(Circle, [{
-    key: "mousedown",
+    key: 'mousedown',
     value: function mousedown(e) {
       var mouse = this.canvas.getPointer(e.e);
       this.started = true;
@@ -36957,15 +36958,15 @@ var Circle = function (_Shape) {
         height: 0,
         left: this.x,
         top: this.y,
-        fill: "transparent",
-        stroke: "red"
+        fill: 'transparent',
+        stroke: 'red'
       });
 
       this.canvas.renderAll();
       this.canvas.setActiveObject(square);
     }
   }, {
-    key: "mousemove",
+    key: 'mousemove',
     value: function mousemove(e) {
       if (!this.started) {
         return false;
@@ -36980,12 +36981,12 @@ var Circle = function (_Shape) {
       }
 
       var circle = this.canvas.getActiveObject();
-      circle.set("radius", w);
-      circle.set("top", this.y - w).set("left", this.x - w);
+      circle.set('radius', w);
+      circle.set('top', this.y - w).set('left', this.x - w);
       this.canvas.renderAll();
     }
   }, {
-    key: "mouseup",
+    key: 'mouseup',
     value: function mouseup(e) {
       if (this.started) {
         this.started = false;
@@ -37006,8 +37007,11 @@ var Circle = function (_Shape) {
       // this.canvas.renderAll();
       this.isListening = false;
 
+      console.log(circle.height, 11);
+
       if (this.afterDraw) this.afterDraw({
-        type: "circle",
+        type: 'circle',
+        height: circle.height,
         left: circle.left,
         top: circle.top,
         radius: circle.radius,
@@ -37015,7 +37019,7 @@ var Circle = function (_Shape) {
         scaleX: circle.scaleX,
         scaleY: circle.scaleY
       }, function (id) {
-        circle.set("itemId", id);
+        circle.set('itemId', id);
       });
     }
   }]);
@@ -37235,7 +37239,8 @@ var Polygon = function (_Shape) {
         type: 'polygon',
         points: points,
         left: polygon.left,
-        top: polygon.top
+        top: polygon.top,
+        height: polygon.height
       }, function (id) {
         polygon.set('itemId', id);
       });
