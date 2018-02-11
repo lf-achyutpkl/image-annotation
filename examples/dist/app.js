@@ -53243,7 +53243,9 @@ var App = function (_React$Component) {
         };
 
         _this.state = {
-            data: JSON.parse(localStorage.getItem('annData'))
+            data: JSON.parse(localStorage.getItem('annData')) || {
+                items: {}
+            }
         };
 
         _this.add = _this.add.bind(_this);
